@@ -31,32 +31,44 @@ function getComputerChoice() {
     }
  }
 
-let humanScore = 0;
-let computerScore = 0;
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
 
-    function playRound(humanChoice, computerChoice) {
+    for (let round = 1; round <= 5; round++) {
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
 
-        if (humanChoice === computerChoice) {
-    console.log("Draw");
- } else if (
-    (humanChoice === "Rock" && computerChoice === "Scissors") ||
-    (humanChoice === "Scissors" && computerChoice === "Paper") ||
-    (humanChoice === "Paper" && computerChoice === "Rock")
-  ) {
-    humanScore += 1;
-    console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-    } else {
-    computerScore += 1;
-    console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
+        if (!humanSelection) {
+            console.log("No input. Round skipped.");
+            continue;
+        }
+
+    
+        if (humanSelection === computerSelection) {
+            console.log("Draw");
+        } else if (
+            (humanSelection === "Rock" && computerSelection === "Scissors") ||
+            (humanSelection === "Scissors" && computerSelection === "Paper") ||
+            (humanSelection === "Paper" && computerSelection === "Rock")
+        ) {
+            humanScore++;
+            console.log(`You win! ${humanSelection} beats ${computerSelection}`);
+        } else {
+            computerScore++;
+            console.log(`You lose! ${computerSelection} beats ${humanSelection}`);
+        }
+
+        console.log(`Round ${round} choices -> Human: ${humanSelection}, Computer: ${computerSelection}`);
+        console.log(`Score after round ${round}: You ${humanScore} - Computer ${computerScore}`);
+        console.log("---------------------------------------------------");
+    }
+
+    console.log("Final Score:", humanScore, "-", computerScore);
+
+    if (humanScore > computerScore) console.log("You are the overall winner!");
+    else if (computerScore > humanScore) console.log("Computer wins the game!");
+    else console.log("The game is a draw!");
 }
 
-}
-
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);
-
-console.log("Human chose:", humanSelection);
-console.log("Computer chose:", computerSelection);
-
+playGame();
