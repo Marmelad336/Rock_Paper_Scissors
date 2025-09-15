@@ -10,3 +10,26 @@ function getComputerChoice() {
         return "Scissors"
     }
 }
+
+ console.log(getComputerChoice())
+
+ function getHumanChoice() {
+    const raw = prompt("Choose: Rock, Paper or Scissors");
+
+    if (raw === null) {
+        return null;
+    }
+
+    if (raw === "Rock") {
+        return "Rock"; 
+    }
+    else if (raw === "Paper") {
+        return "Paper";
+    } 
+    else if (raw === "Scissors"){
+        return "Scissors";
+    }
+ }
+
+const humanChoice = getHumanChoice();
+console.log(humanChoice);
