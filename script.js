@@ -11,40 +11,12 @@ function getComputerChoice() {
     }
 }
 
- function getHumanChoice() {
-    const raw = prompt("Choose: Rock, Paper or Scissors");
-
-    if (raw === null) {
-        return null;
-    }
-
-
-    if (raw === "Rock") {
-        return "Rock"; 
-    }
-    else if (raw === "Paper") {
-        return "Paper";
-    } 
-    else if (raw === "Scissors"){
-        return "Scissors";
-    
-    }
- }
-
-function playGame() {
     let humanScore = 0;
     let computerScore = 0;
 
-    for (let round = 1; round <= 5; round++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
+function playRound(humanSelection, computerSelection) {
+    const resultsDiv = document.getElementById("results");
 
-        if (!humanSelection) {
-            console.log("No input. Round skipped.");
-            continue;
-        }
-
-    
         if (humanSelection === computerSelection) {
             console.log("Draw");
         } else if (
@@ -59,16 +31,25 @@ function playGame() {
             console.log(`You lose! ${computerSelection} beats ${humanSelection}`);
         }
 
-        console.log(`Round ${round} choices -> Human: ${humanSelection}, Computer: ${computerSelection}`);
-        console.log(`Score after round ${round}: You ${humanScore} - Computer ${computerScore}`);
-        console.log("---------------------------------------------------");
+        resultsDiv.innerHTML += `<p>Score: You ${humanScore} - Computer ${computerScore}</p>`;
+
+           if (humanScore === 5 || computerScore === 5) {
+        if (humanScore === 5) {
+            resultsDiv.innerHTML += `<h2>You are the winner</h2>`;
+        } else {
+            resultsDiv.innerHTML += `<h2>Computer wins</h2>`;
+        }
+       
+        document.querySelectorAll("button").forEach(btn => btn.disabled = true);
     }
-
-    console.log("Final Score:", humanScore, "-", computerScore);
-
-    if (humanScore > computerScore) console.log("You are the overall winner!");
-    else if (computerScore > humanScore) console.log("Computer wins the game!");
-    else console.log("The game is a draw!");
 }
 
-playGame();
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const humanSelection = button.id;
+        const computerSelection = getComputerChoice();
+        playRound(humanSelection, computerSelection);
+    })
+})
